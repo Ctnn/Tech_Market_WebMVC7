@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tech_Market_WebMVC7UI.Models
 {
+    [Table("OrderStatus")]
     public class OrderStatus
     {
 

@@ -11,12 +11,20 @@ namespace Tech_Market_WebMVC7UI.Models
 
         [Required]
         [MaxLength(40)]
-        public string? ComputerName { get;set; } 
+        public string? ComputerName { get;set; }
 
-        public string? Image { get; set; }  
+        [Required]
+        public double Price { get; set; }
+
+        public string? Image { get; set; }
+        [Required]
 
         public string GenreId { get;set; }
 
         public required Genre Genre;
+
+       public List<OrderDetail> OrderDetails { get; set; }
+
+       public List<CartDetail> CartDetail { get; set; }
     }
 }
