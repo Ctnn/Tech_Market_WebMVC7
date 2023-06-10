@@ -7,15 +7,18 @@ namespace Tech_Market_WebMVC7UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHomeRepository _homeRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHomeRepository homeRepository)
         {
             _logger = logger;
+            _homeRepository = homeRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string sterm = "",int genreId=0)
         {
-            return View();
+            IEnumerable<Computer> computers =await _homeRepository.GetComputers(sterm, genreId);
+            return View(computers);
         }
 
         public IActionResult Privacy()

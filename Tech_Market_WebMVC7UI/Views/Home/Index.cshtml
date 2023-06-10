@@ -1,7 +1,5 @@
-﻿@{
-
-
-}
+﻿@model IEnumerable<Computer>
+@{}
 
 <div class="my-2">
  <form class="row row-cols-lg-auto g-3 align-items-center">
@@ -9,7 +7,7 @@
 
   <div class="col-12">
     <label class="visually-hidden" for="inlineFormSelectPref">Genres</label>
-    <select class="form-select" id="genreId">
+    <select class="form-select" id="genreId">genreId
       <option selected>Choose...</option>
       <option value="1">Desktops</option>
       <option value="2">Laptops</option>
@@ -20,7 +18,7 @@
             <label class="visually-hidden" for="inlineFormInputGroupUsername">Search By Title</label>
             <div class="input-group">
                 <div class="input-group-text"></div>
-                <input type="text" class="form-control" id="" placeholder="Search By Title">
+                <input type="text" class="form-control" id="sterm" placeholder="Search By Title">
             </div>
         </div>
 
@@ -33,15 +31,24 @@
 </div>
 
 <div class="w-100 mt-4 d-flex flex-wrap">
-    @for (int i = 1; i <= 9; i++){
+   @foreach(var computer in Model){
 <div class="card mx-4 mb-5" style="width: 16rem;">
-            @*<img src="https://picsum.photos/120/300" class="card-img-top" alt="...">*@
-    <div class="card-body">
-        <h5 class="card-title">Computer title</h5>
+           @if(string.IsNullOrEmpty(computer.Image))
+            {
+                <img src="/images/no_image.jpg" class="card-img-top" alt="...">
+            }
+            else
+            {
+                <img src="/images/@computer.Image" class="card-img-top" alt="...">
+            }
+            <div class="card-body">
+        <h5 class="card-title">@computer.ComputerName</h5>
         <p class="card-text">
-            Author:
+            Genre:@computer.GenreName
+             <br>
+            CompanyName:@computer.CompanyName
             <br>
-            Price:
+            Price:@computer.Price
         </p>
         <a href="#" class="btn btn-primary">Add To Cart</a>
     </div>

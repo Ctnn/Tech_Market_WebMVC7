@@ -167,12 +167,10 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -209,12 +207,10 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -267,14 +263,18 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ComputerName")
+                    b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<string>("GenreId")
+                    b.Property<string>("ComputerName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -284,7 +284,27 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GenreId");
+
                     b.ToTable("Computer");
+                });
+
+            modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("GenreName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.Order", b =>
@@ -451,6 +471,17 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
                     b.Navigation("ShoppingCart");
                 });
 
+            modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.Computer", b =>
+                {
+                    b.HasOne("Tech_Market_WebMVC7UI.Models.Genre", "Genre")
+                        .WithMany("Computers")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+                });
+
             modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.Order", b =>
                 {
                     b.HasOne("Tech_Market_WebMVC7UI.Models.OrderStatus", "OrderStatus")
@@ -465,7 +496,7 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
             modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.OrderDetail", b =>
                 {
                     b.HasOne("Tech_Market_WebMVC7UI.Models.Computer", "Computer")
-                        .WithMany("OrderDetails")
+                        .WithMany("OrderDetail")
                         .HasForeignKey("ComputerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -485,7 +516,12 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
                 {
                     b.Navigation("CartDetail");
 
-                    b.Navigation("OrderDetails");
+                    b.Navigation("OrderDetail");
+                });
+
+            modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.Genre", b =>
+                {
+                    b.Navigation("Computers");
                 });
 
             modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.Order", b =>

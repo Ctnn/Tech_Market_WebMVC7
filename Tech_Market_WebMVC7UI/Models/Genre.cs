@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Tech_Market_WebMVC7UI.Models
 {
@@ -11,6 +11,6 @@ namespace Tech_Market_WebMVC7UI.Models
         [Required]
         [MaxLength(50)]
         public string GenreName { get; set; }
-        public List<Computer> Computers { get; set; } 
+        public List<Computer> Computers { get; set; }
     }
 }
