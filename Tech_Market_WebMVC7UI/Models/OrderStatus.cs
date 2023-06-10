@@ -8,7 +8,8 @@ namespace Tech_Market_WebMVC7UI.Models
     {
 
         public int Id { get; set; }
-
+        [Required]
+        public int StatusId { get; set; }
         [Required]
         [MaxLength(40)]
         public string ?StatusName { get; set; }

@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Tech_Market_WebMVC7UI.Constants;
 
 namespace Tech_Market_WebMVC7UI.Areas.Identity.Pages.Account
 {
@@ -120,6 +121,11 @@ namespace Tech_Market_WebMVC7UI.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    // Constants içerisinde belirttiğim kullanıcı rolünü aktifleştiriyorum.
+
+                    await _userManager.AddToRoleAsync(user, Roles.User.ToString());
+
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
