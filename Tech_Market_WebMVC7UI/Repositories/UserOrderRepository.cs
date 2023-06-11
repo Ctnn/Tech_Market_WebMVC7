@@ -40,6 +40,4 @@ namespace Tech_Market_WebMVC7UI.Repositories
             return userId;
         }
     }
-
-
 }
