@@ -16,6 +16,8 @@ namespace Tech_Market_WebMVC7UI.Models
 
         [Required]
         public int Quantity { get; set; }
+        [Required]
+        public double UnitPrice { get; set; }
 
         public Computer Computer { get; set; }
 

@@ -12,8 +12,8 @@ using Tech_Market_WebMVC7UI.Data;
 namespace Tech_Market_WebMVC7UI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230611142948_added-tables")]
-    partial class addedtables
+    [Migration("20230611180147_newmig")]
+    partial class newmig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -240,8 +240,8 @@ namespace Tech_Market_WebMVC7UI.Migrations
                     b.Property<int>("ShoppingCartId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShoppingCart_Id")
-                        .HasColumnType("int");
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
