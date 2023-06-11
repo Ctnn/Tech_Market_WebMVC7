@@ -1,7 +1,8 @@
 # Tech_Market_WebMVC7
 
+
 							
-Ctnkaya TechMarket ASP.NET Core MVC (.NET 7) - Yiğit Çetinkaya - 201817017
+					Ctnkaya TechMarket ASP.NET Core MVC (.NET 7) - Yiğit Çetinkaya - 201817017
 
 PROJE ÖZET
 Bu proje, bir teknoloji mağazası konsepti için geliştirilen bir web uygulamasıdır. Amacı, kullanıcılara teknoloji ürünlerini sergilemek, alışveriş yapma imkanı sunmak ve veritabanı üzerinde temel işlemleri gerçekleştirmektir.
@@ -18,9 +19,58 @@ Proje, GİT kullanılarak adımlar halinde commitlenmiştir. Bu şekilde yapıla
 
 Projeye ait görseller .zip içerisinde ve GitHub Repo'sunda belirtilmiştir.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NOT: Projeye ait bütün yapılar başlıklar altında sunulmaktadır.
+NOT2: DB Backup dosyası klasör içerisinde yer almaktadır.
+NOT3: Proje isterlerinde istenilen bütün yapılar proje içerisine entegre edilerek aktif bir şekilde kullanılmıştır.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-							                                              		         -Proje yapısı-
+
+										  -Uygulama Kullanımı-
+
+Ctnkaya TechMarket:
+Müşteriye güncel ürünleri aktararak faydalanmasını sağlayan bir web arayüzüdür.
+
+Burada 3 seçenek sunulur:(Arttırılabilir)
+=>Desktop
+=>Laptop
+=>Gaming Laptop
+
+İsteğe bağlı olarak bu 3 ürün yelpazesinden ürünler tercih edilebilmektedir.
+
+AnaEkran doğrultusunda ürünleri görüntüleyebileceğimiz ve aynı zamanda bunları sepetimize alarak ekleyebileceğimiz bir alan bulunmakta.
+
+Eğer giriş yapılmadan ürün eklenmeye çalışırsa Login sayfasına bir yönlendirme gerçekleştirilir.(Kullanıcı kayıtlı değilse, kayıt olması gerekmektedir.)
+
+Kullanıcı giriş yaptığı taktirde istediği üründen istediği adet kadar alabilmekte,
+ve ürünlerini seçerken kelime veya combobox üzerinden seçim yaparak filtreleyebilmektedir.
+
+Bu sayede kullanıcı istediği ürüne kolayca ulaşabilmektedir.
+
+Sepete eklediği ürünleri sağ üst tarafta ürün adedini dinamik bir yapıda görüntüleyebilmekte,kolayca yönetebilmekte, 
+arttırma ve azaltma işlemlerini veya kaldırma işlerini gerçekleştirebilmektedir.
+
+Sipariş verdiği ürünlere kullanıcı panelinden rahatlıkla ulaşabilmektedir.
+
+
+Kullanıcı isterse Sağ üstte yer alan mail adresine tıklayabilir ve buradan Manage your Account sayfasına erişebilir bu sayede bilgilerini değiştirebilir,
+Kişisel verilerine ulaşabilir, bu kişisel verileri .json olarak kayıt edebilir.
+
+Aynı zamanda siparişlerinin durumu buradan sorgulayabilir:
+=> Bekleyen siparişler "Pending" olarak beklemeye alınır ve admin tarafından eğer onaylanırsa transfer süreci başlar:
+Database'de şu şekilde konumlandırılmıştır bu kısım:
+Pending
+Shipped
+Delivered
+Cancelled
+Returned
+Refund
+Olarak ayrılmaktadır.
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+									         -Proje yapısı-
 
 DATABASE:
 
@@ -96,10 +146,9 @@ ShoppingCart Tablosu:
 Id: 1
 UserId: "exampleuser"
 IsDeleted: 0
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-								                                                             -KATMANLI MİMARİ YAPISI-
+								            -KATMANLI MİMARİ YAPISI-
 
 Kullandığım uygulama katmanlı bir mimariye sahiptir. Katmanlı mimari, uygulamaların farklı işlevlerini mantıksal katmanlara bölen ve bu katmanlar arasında düzenli iletişim sağlayan bir yaklaşımdır.
 
@@ -118,10 +167,23 @@ Veritabanı Katmanı (Database Layer):
 Bu katman, gerçek veritabanını temsil eder. Veritabanı yönetim sistemine bağlı olarak kullanılan veritabanı sunucusunda oluşturulan tablolar ve ilişkileri bulunur.
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+									  -Kullanıcı Girişi ve Yetkilendirme İşlemleri-
+
+Bu projede, kullanıcı girişi ve yetkilendirme işlemlerini gerçekleştirmek için session yapısı kullanılmıştır. Kullanıcılar, uygulamaya giriş yapabilmekte ve oturumlarını başlatmaktadır. Bu sayede, kullanıcıların uygulama içerisindeki kişisel bilgilere erişmesi ve yetkilendirilmiş işlevlere ulaşması sağlanmaktadır.
+
+Opsiyonel olarak yetkilendirme yapmak, projeye ek bir değer katmaktadır. Bu şekilde, farklı kullanıcı rollerine (ör. yönetici, müşteri) ve yetkilere sahip kullanıcılara özelleştirilmiş erişim kontrolü sağlanabilmektedir. Yetkilendirme, kullanıcılara sadece yetkilerine uygun işlevleri kullanma imkanı tanıyarak güvenlik ve veri bütünlüğünü sağlamaktadır.
+
+Session yapısı, kullanıcının oturum bilgilerini geçici bir süre boyunca saklamak için kullanılan bir mekanizmadır. Bu sayede, kullanıcının oturumu boyunca kimlik doğrulama bilgileri ve diğer önemli veriler tutulabilir. Kullanıcının uygulamada gezinirken, farklı sayfalar arasında bilgilerin korunmasını ve tutarlı bir kullanıcı deneyimi sağlanmasını sağlar.
+
+Kullanıcı girişi ve yetkilendirme işlemleri, kullanıcılara kişiselleştirilmiş deneyimler sunmak, güvenliği artırmak ve belirli işlevlere erişimi kontrol etmek için önemli bir bileşendir. Bu özellikler, uygulamanın kullanıcılar tarafından etkin ve güvenli bir şekilde kullanılabilmesini sağlamaktadır.
 
 
-									                                                -BootStrap Kullanımı Ve Nedeni-
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+									    -BootStrap Kullanımı Ve Nedeni-
 
 
 Proje geliştirme sürecinde Bootstrap kullanma tercihinde bulundum. Bootstrap, popüler bir HTML, CSS ve JavaScript framework'üdür.
@@ -141,9 +203,9 @@ Yararlanılan Icon Paketi:
 =>Bootstrap Icons v1.3.0
 
 !Bootstrap Form yapısı da proje içerisinde kullanıldı.
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-								                                            	    -Bootswatch Kullanımı Ve Nedeni-
+									    -Bootswatch Kullanımı Ve Nedeni-
 
 Proje geliştirme sürecinde Bootswatch teması kullanma tercihinde bulundum. Bootswatch, Bootstrap framework'üne önceden tasarlanmış temalar sunan bir hizmettir.
 
@@ -156,8 +218,8 @@ Proje için uygun bir Bootswatch teması seçerek, görsel açıdan dikkat çeki
 Morph arayüzünü baz alarak projemi geliştirdim.
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-								                                                		 -IEnumerable Yapısı-
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+										 -IEnumerable Yapısı-
 
 
 Bu projede, IEnumerable kullanılarak veri koleksiyonlarının döngülenebilir yapısı sağlandı ve veri işleme işlevselliği kolaylıkla gerçekleştirilebildi.
@@ -166,62 +228,33 @@ IEnumerable, bir koleksiyonun elemanlarının üzerinde döngü (iterasyon) yapm
 Bu sayede, verileri tek tek elde etmek veya veriler üzerinde işlemler yapmak için foreach döngüsü veya LINQ (Language Integrated Query) gibi sorgu ifadelerini kullanabilmekteyiz.
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-										                                                -Uygulama Kullanımı-
-
-Ctnkaya TechMarket:
-Müşteriye güncel ürünleri aktararak faydalanmasını sağlayan bir web arayüzüdür.
-Burada 3 seçenek sunulur:
-=>Desktop
-=>Laptop
-=>Gaming Laptop
-İsteğe bağlı olarak bu 3 ürün yelpazesinden ürünler tercih edilebilmektedir.
-
-AnaEkran doğrultusunda ürünleri görüntüleyebileceğimiz ve aynı zamanda bunları sepetimize alarak ekleyebileceğimiz bir alan bulunmakta.
-Eğer giriş yapılmadan ürün eklenmeye çalışırsa Login sayfasına bir yönlendirme gerçekleştirilir.
-Kullanıcı giriş yaptığı taktirde istediği üründen istediği adet kadar alabilmekte,
-ve ürünlerini seçerken kelime veya combobox üzerinden seçim yaparak filtreleyebilmektedir.
-Bu sayede kullanıcı istediği ürüne kolayca ulaşabilmektedir.
-Sepete eklediği ürünleri sağ üst tarafta ürün adedini dinamik bir yapıda görüntüleyebilmekte,kolayca yönetebilmekte, 
-arttırma ve azaltma işlemlerini veya kaldırma işlerini gerçekleştirebilmektedir.
-Sipariş verdiği ürünlere kullanıcı panelinden rahatlıkla ulaşabilmektedir.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-Kullanıcı isterse Sağ üstte yer alan mail adresine tıklayabilir ve buradan Manage your Account sayfasına erişebilir bu sayede bilgilerini değiştirebilir,
-Kişisel verilerine ulaşabilir, bu kişisel verileri .json olarak kayıt edebilir.
-Aynı zamanda siparişlerinin durumu buradan sorgulayabilir:
-=> Bekleyen siparişler "Pending" olarak beklemeye alınır ve admin tarafından eğer onaylanırsa transfer süreci başlar:
-Database'de şu şekilde konumlandırılmıştır bu kısım:
-Pending
-Shipped
-Delivered
-Cancelled
-Returned
-Refund
-Olarak ayrılmaktadır.
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-										                                            	-GEREKSİNİMLER-
+											-GEREKSİNİMLER-
 İşletim Sistemi:
 
 Windows, Linux veya macOS gibi işletim sistemlerinden biri.
+
 .NET Core SDK:
 
 Uygulamanın geliştirilmesi ve çalıştırılması için .NET Core SDK'nın yüklü olması gerekmektedir. .NET Core SDK, projenin .NET Core bileşenlerini derleyip çalıştırmanızı sağlar.
+
 Kod Editörü:
 
 Uygulama kodunun yazılması ve düzenlenmesi için bir kod editörüne ihtiyaç vardır. Örneğin, Visual Studio Code, Visual Studio, JetBrains Rider veya başka bir uyumlu kod editörü kullanılabilir.
+
 ASP.NET Core MVC ve Entity Framework Core:
 
 Uygulama, ASP.NET Core MVC ve Entity Framework Core ile geliştirilmiştir. Bu nedenle, geliştirme ortamınızda bu bileşenlerin yüklü ve kullanılabilir durumda olması gerekmektedir.
+
 Veritabanı Sunucusu:
 
-Uygulama, veritabanı işlemleri için bir veritabanı sunucusuna ihtiyaç duyar. Örneğin, MSSQL, MySQL, PostgreSQL gibi bir veritabanı sunucusu kullanılabilir. Bu sunucunun kurulumu ve yapılandırması, uygulamanın gereksinimlerine uygun olarak yapılmalıdır.
+Uygulama, veritabanı işlemleri için bir veritabanı sunucusuna ihtiyaç duyar.MSSQL Kullanımı proje için önerilir. Bu sunucunun kurulumu ve yapılandırması, uygulamanın gereksinimlerine uygun olarak yapılmalıdır. 
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+LinkedIN:	https://www.linkedin.com/in/yigitcetinkaya/
+GİTHUB:  	https://github.com/Ctnn
 
 
 
