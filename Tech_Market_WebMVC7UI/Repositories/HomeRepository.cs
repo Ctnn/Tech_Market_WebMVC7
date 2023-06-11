@@ -9,7 +9,11 @@ namespace Tech_Market_WebMVC7UI.Repositories
 
         public HomeRepository(ApplicationDbContext db) {
             _db = db;
-        } 
+        }
+
+        public async Task<IEnumerable<Genre>> Genres(){
+               return await _db.Genres.ToListAsync();
+        }
         public async Task<IEnumerable<Computer>> GetComputers(string sTerm="",int genreId=0)
         {
             sTerm = sTerm.ToLower();

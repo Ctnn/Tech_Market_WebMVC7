@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Tech_Market_WebMVC7UI.Models;
+using Tech_Market_WebMVC7UI.Models.DTOs;
 
 namespace Tech_Market_WebMVC7UI.Controllers
 {
@@ -17,8 +18,17 @@ namespace Tech_Market_WebMVC7UI.Controllers
 
         public async Task<IActionResult> Index(string sterm = "",int genreId=0)
         {
+
             IEnumerable<Computer> computers =await _homeRepository.GetComputers(sterm, genreId);
-            return View(computers);
+            IEnumerable<Genre> genres = await _homeRepository.Genres();
+            ComputerDisplayModel computerDisplayModel = new ComputerDisplayModel
+            {
+                Computers = computers,
+                Genres = genres,
+                STerm = sterm,
+                GenreId = genreId
+            };
+            return View(computerDisplayModel);
         }
 
         public IActionResult Privacy()
