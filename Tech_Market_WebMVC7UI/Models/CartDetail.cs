@@ -9,17 +9,17 @@ namespace Tech_Market_WebMVC7UI.Models
         public int Id { get; set; }
 
         [Required]
-        public int ShoppingCart_Id { get; set; }
+        public int ShoppingCartId { get; set; }
 
         [Required]
         public int ComputerId { get; set; }
 
         [Required]
-        public int Quantitiy { get; set; }
+        public int Quantity { get; set; }
 
- 
         public Computer Computer { get; set; }
 
-        public ShoppingCart ShoppingCart { get; set; }
+        [ForeignKey("ShoppingCartId")]
+        public virtual ShoppingCart ShoppingCart { get; set; }
     }
 }

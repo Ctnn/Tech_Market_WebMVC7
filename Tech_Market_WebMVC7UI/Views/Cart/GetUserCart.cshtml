@@ -1,0 +1,61 @@
+﻿@model ShoppingCart
+@{
+    ViewData["Title"] = "GetUserCart";
+}
+<div style="width:90%;margin:auto" class="mt-2">
+    @if (Model != null && Model.CartDetails != null && Model.CartDetails.Count > 0)
+    {
+        <h5>My Cart</h5>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Computer</th>
+                <th>Image</th>
+                <th>Genre</th>
+                <th>Unit Price(INR)</th>
+                <th>Qty</th>
+                <th>Total Price</th>
+                <th>Action</th>
+             
+            </tr>
+            @foreach (var item in Model.CartDetails)
+            {
+                <tr>
+                    <td>@item.Computer.ComputerName</td>
+                    <td>
+                        @if (string.IsNullOrEmpty(item.Computer.Image)){
+                            //width:100%;height:280px
+                        <img src="/images/no_image.jpg" style="width:80px;height:100px">
+             
+                    }
+                    else{
+                            <img src="/images/@item.Computer.Image" style="width:80px;height:100px">
+                    }    
+                </td>
+                <td>@item.Computer.Genre.GenreName</td>
+                    <td>@item.Computer.Price X @item.Quantity</td>
+                    <td>@(item.Computer.Price * item.Quantity)</td>
+                    <td>
+                        <a class="btn btn-info" href="/Cart/AddItem?computerId=@item.ComputerId&&redirect=1">+</a>
+                        <a class="btn btn-info" href="/cart/removeitem?computerid=@item.ComputerId">-</a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div class="my-2">
+            <h5>Total(INR):</h5> @(Model.CartDetails.Select(item=>item.Computer.Price*item.Quantity).Sum())
+
+        </div>
+
+        <div class="my-2">
+            <a class="btn btn-primary" href="#">Checkout</a>
+        </div>
+            
+    }
+    else
+    {
+        <h5>Cart is empty.</h5>
+    }
+
+</div>

@@ -8,7 +8,7 @@ using Tech_Market_WebMVC7UI.Data;
 
 #nullable disable
 
-namespace Tech_Market_WebMVC7UI.Data.Migrations
+namespace Tech_Market_WebMVC7UI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -228,16 +228,10 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BookId")
+                    b.Property<int>("ComputerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Computer")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ComputerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantitiy")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("ShoppingCartId")
@@ -458,15 +452,19 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
 
             modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.CartDetail", b =>
                 {
-                    b.HasOne("Tech_Market_WebMVC7UI.Models.Computer", null)
+                    b.HasOne("Tech_Market_WebMVC7UI.Models.Computer", "Computer")
                         .WithMany("CartDetail")
-                        .HasForeignKey("ComputerId");
+                        .HasForeignKey("ComputerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Tech_Market_WebMVC7UI.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany()
+                        .WithMany("CartDetails")
                         .HasForeignKey("ShoppingCartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Computer");
 
                     b.Navigation("ShoppingCart");
                 });
@@ -527,6 +525,11 @@ namespace Tech_Market_WebMVC7UI.Data.Migrations
             modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.Order", b =>
                 {
                     b.Navigation("OrderDetail");
+                });
+
+            modelBuilder.Entity("Tech_Market_WebMVC7UI.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("CartDetails");
                 });
 #pragma warning restore 612, 618
         }

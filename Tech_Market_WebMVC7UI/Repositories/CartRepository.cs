@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using System.Security.Claims;
 using Tech_Market_WebMVC7UI.Models;
 
@@ -19,16 +20,14 @@ namespace Tech_Market_WebMVC7UI.Repositories
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> AddItem(int computerId, int qty)
+        public async Task<int> AddItem(int computerId, int qty)
         {
+            string userId = GetUserId();
             using var transaction = _db.Database.BeginTransaction();
             try
             {
-                string userId = GetUserId();
                 if (string.IsNullOrEmpty(userId))
-                {
-                    return false;
-                }
+                    throw new Exception("user is not logged-in");
                 var cart = await GetCart(userId);
                 if (cart is null)
                 {
@@ -37,74 +36,70 @@ namespace Tech_Market_WebMVC7UI.Repositories
                         UserId = userId
                     };
                     _db.ShoppingCarts.Add(cart);
+                    _db.SaveChanges();
                 }
-                _db.SaveChanges();
-                // Kart detayları eklenecek
-                var cartItem = _db.CartDetails.FirstOrDefault(a => a.ShoppingCart_Id == cart.Id && a.ComputerId == computerId);
-                if (cartItem != null)
+               
+                // cart detail section
+                var cartItem = _db.CartDetails
+                                  .FirstOrDefault(a => a.ShoppingCartId == cart.Id && a.ComputerId == computerId);
+                if (cartItem is not null)
                 {
-                    cartItem.Quantitiy += qty;
+                    cartItem.Quantity += qty;
                 }
                 else
                 {
+                    var book = _db.Computers.Find(computerId);
                     cartItem = new CartDetail
                     {
                         ComputerId = computerId,
-                        ShoppingCart_Id = cart.Id,
-                        Quantitiy = qty
+                        ShoppingCartId = cart.Id,
+                        Quantity = qty
                     };
                     _db.CartDetails.Add(cartItem);
                 }
                 _db.SaveChanges();
                 transaction.Commit();
-                return true;
             }
             catch (Exception ex)
             {
-                return false;
             }
+            var cartItemCount = await GetCartItemCount(userId);
+            return cartItemCount;
         }
-        public async Task<bool> RemoveItem(int computerId)
+        public async Task<int> RemoveItem(int computerId)
         {
-            //using var transaction = _db.Database.BeginTransaction();
+            string userId = GetUserId();
             try
             {
-                string userId = GetUserId();
                 if (string.IsNullOrEmpty(userId))
-                {
-                    return false;
-                }
+                    throw new Exception("user is not logged-in");
                 var cart = await GetCart(userId);
                 if (cart is null)
                 {
-                    return false;
+                    throw new Exception("Invalid cart");
                 }
-                // Kart detayları eklenecek
-                var cartItem = _db.CartDetails.FirstOrDefault(a => a.ShoppingCart_Id == cart.Id && a.ComputerId == computerId);
-                if (cartItem == null)
-                {
-                    return false;
-                }
-                else if (cartItem.Quantitiy == 1)
-                {
+                    
+            
+                var cartItem = _db.CartDetails
+                                  .FirstOrDefault(a => a.ShoppingCartId == cart.Id && a.ComputerId == computerId);
+                if (cartItem is null)
+                    throw new Exception("Not items in cart");
+                else if (cartItem.Quantity == 1)
                     _db.CartDetails.Remove(cartItem);
-                }
                 else
-                {
-                    cartItem.Quantitiy = cartItem.Quantitiy - 1;
-                }
+                    cartItem.Quantity = cartItem.Quantity - 1;
                 _db.SaveChanges();
-                //transaction.Commit();
-                return true;
             }
             catch (Exception ex)
             {
-                return false;
+
             }
+            var cartItemCount = await GetCartItemCount(userId);
+            return cartItemCount;
         }
 
 
-        public async Task<IEnumerable<ShoppingCart>> GetUserCart()
+        public async Task<ShoppingCart> GetUserCart()
         {
             var userId = GetUserId();
             if (userId == null)
@@ -115,7 +110,7 @@ namespace Tech_Market_WebMVC7UI.Repositories
                 .Include(a => a.CartDetails)
                 .ThenInclude(a => a.Computer)
                 .ThenInclude(a => a.Genre) 
-                .Where(a => a.UserId == userId).ToListAsync();
+                .Where(a => a.UserId == userId).FirstOrDefaultAsync();
 
             return shoppingCart;
         }
@@ -123,13 +118,26 @@ namespace Tech_Market_WebMVC7UI.Repositories
 
 
 
-        private async Task<ShoppingCart> GetCart(string userId)
+        public async Task<ShoppingCart> GetCart(string userId)
         {
             var cart =await  _db.ShoppingCarts.FirstOrDefaultAsync(x => x.UserId == userId);
             return cart;
         }
 
-        private string GetUserId()
+        public async Task<int> GetCartItemCount(string userId="")
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                userId = GetUserId();
+            }
+            var data = await (from cart in _db.ShoppingCarts
+                              join cartDetail in _db.CartDetails
+                              on cart.Id equals cartDetail.ShoppingCartId
+                              select new {cartDetail.Id}).ToListAsync();
+            return data.Count;
+        }
+
+        public string GetUserId()
         {
             var principal = _httpContextAccessor.HttpContext.User;
             string userId = _userManager.GetUserId(principal);
