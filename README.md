@@ -253,8 +253,8 @@ Veritabanı Sunucusu:
 Uygulama, veritabanı işlemleri için bir veritabanı sunucusuna ihtiyaç duyar.MSSQL Kullanımı proje için önerilir. Bu sunucunun kurulumu ve yapılandırması, uygulamanın gereksinimlerine uygun olarak yapılmalıdır. 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-LinkedIN:	https://www.linkedin.com/in/yigitcetinkaya/
-GİTHUB:  	https://github.com/Ctnn
+LinkedIn:	https://www.linkedin.com/in/yigitcetinkaya/
+Github:  	https://github.com/Ctnn
 
 
 
