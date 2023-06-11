@@ -39,20 +39,20 @@
 <div class="card mx-4 mb-5" style="width: 16rem;">
            @if(string.IsNullOrEmpty(computer.Image))
             {
-                <img style="width:100%;height:300px" src="/images/no_image.jpg" class="card-img-top" alt="...">
+                <img style="width:100%;height:280px" src="/images/no_image.jpg" class="card-img-top" alt="...">
             }
             else
             {
-                <img style="width:100%;height:300px" src="/images/@computer.Image" class="card-img-top" alt="...">
+                <img style="width:100%;height:280px" src="/images/@computer.Image" class="card-img-top" alt="...">
             }
             <div class="card-body">
         <h5 class="card-title">@computer.ComputerName</h5>
         <p class="card-text">
-            Genre:@computer.GenreName
-             <br>
-            CompanyName:@computer.CompanyName 
-            <br>
-                    Price:@computer.Price ₺
+                    <b>Genre:</b>@computer.GenreName
+                    <br>
+                    <b>CompanyName:</b> @computer.CompanyName
+                    <br>
+                    <b>Price:</b>@computer.Price ₺
         </p>
         <a href="#" class="btn btn-primary">Add To Cart</a>
     </div>
