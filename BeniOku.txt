@@ -17,6 +17,55 @@ Proje, GİT kullanılarak adımlar halinde commitlenmiştir. Bu şekilde yapıla
 
 Projeye ait görseller .zip içerisinde ve GitHub Repo'sunda belirtilmiştir.
 
+NOT: Projeye ait bütün yapılar başlıklar altında sunulmaktadır.
+NOT2: DB Backup dosyası klasör içerisinde yer almaktadır.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+										  -Uygulama Kullanımı-
+
+Ctnkaya TechMarket:
+Müşteriye güncel ürünleri aktararak faydalanmasını sağlayan bir web arayüzüdür.
+
+Burada 3 seçenek sunulur:(Arttırılabilir)
+=>Desktop
+=>Laptop
+=>Gaming Laptop
+
+İsteğe bağlı olarak bu 3 ürün yelpazesinden ürünler tercih edilebilmektedir.
+
+AnaEkran doğrultusunda ürünleri görüntüleyebileceğimiz ve aynı zamanda bunları sepetimize alarak ekleyebileceğimiz bir alan bulunmakta.
+
+Eğer giriş yapılmadan ürün eklenmeye çalışırsa Login sayfasına bir yönlendirme gerçekleştirilir.(Kullanıcı kayıtlı değilse, kayıt olması gerekmektedir.)
+
+Kullanıcı giriş yaptığı taktirde istediği üründen istediği adet kadar alabilmekte,
+ve ürünlerini seçerken kelime veya combobox üzerinden seçim yaparak filtreleyebilmektedir.
+
+Bu sayede kullanıcı istediği ürüne kolayca ulaşabilmektedir.
+
+Sepete eklediği ürünleri sağ üst tarafta ürün adedini dinamik bir yapıda görüntüleyebilmekte,kolayca yönetebilmekte, 
+arttırma ve azaltma işlemlerini veya kaldırma işlerini gerçekleştirebilmektedir.
+
+Sipariş verdiği ürünlere kullanıcı panelinden rahatlıkla ulaşabilmektedir.
+
+
+Kullanıcı isterse Sağ üstte yer alan mail adresine tıklayabilir ve buradan Manage your Account sayfasına erişebilir bu sayede bilgilerini değiştirebilir,
+Kişisel verilerine ulaşabilir, bu kişisel verileri .json olarak kayıt edebilir.
+
+Aynı zamanda siparişlerinin durumu buradan sorgulayabilir:
+=> Bekleyen siparişler "Pending" olarak beklemeye alınır ve admin tarafından eğer onaylanırsa transfer süreci başlar:
+Database'de şu şekilde konumlandırılmıştır bu kısım:
+Pending
+Shipped
+Delivered
+Cancelled
+Returned
+Refund
+Olarak ayrılmaktadır.
+
+
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 									         -Proje yapısı-
@@ -165,63 +214,32 @@ IEnumerable, bir koleksiyonun elemanlarının üzerinde döngü (iterasyon) yapm
 Bu sayede, verileri tek tek elde etmek veya veriler üzerinde işlemler yapmak için foreach döngüsü veya LINQ (Language Integrated Query) gibi sorgu ifadelerini kullanabilmekteyiz.
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-										  -Uygulama Kullanımı-
-
-Ctnkaya TechMarket:
-Müşteriye güncel ürünleri aktararak faydalanmasını sağlayan bir web arayüzüdür.
-Burada 3 seçenek sunulur:
-=>Desktop
-=>Laptop
-=>Gaming Laptop
-İsteğe bağlı olarak bu 3 ürün yelpazesinden ürünler tercih edilebilmektedir.
-
-AnaEkran doğrultusunda ürünleri görüntüleyebileceğimiz ve aynı zamanda bunları sepetimize alarak ekleyebileceğimiz bir alan bulunmakta.
-Eğer giriş yapılmadan ürün eklenmeye çalışırsa Login sayfasına bir yönlendirme gerçekleştirilir.
-Kullanıcı giriş yaptığı taktirde istediği üründen istediği adet kadar alabilmekte,
-ve ürünlerini seçerken kelime veya combobox üzerinden seçim yaparak filtreleyebilmektedir.
-Bu sayede kullanıcı istediği ürüne kolayca ulaşabilmektedir.
-Sepete eklediği ürünleri sağ üst tarafta ürün adedini dinamik bir yapıda görüntüleyebilmekte,kolayca yönetebilmekte, 
-arttırma ve azaltma işlemlerini veya kaldırma işlerini gerçekleştirebilmektedir.
-Sipariş verdiği ürünlere kullanıcı panelinden rahatlıkla ulaşabilmektedir.
-
-
-Kullanıcı isterse Sağ üstte yer alan mail adresine tıklayabilir ve buradan Manage your Account sayfasına erişebilir bu sayede bilgilerini değiştirebilir,
-Kişisel verilerine ulaşabilir, bu kişisel verileri .json olarak kayıt edebilir.
-Aynı zamanda siparişlerinin durumu buradan sorgulayabilir:
-=> Bekleyen siparişler "Pending" olarak beklemeye alınır ve admin tarafından eğer onaylanırsa transfer süreci başlar:
-Database'de şu şekilde konumlandırılmıştır bu kısım:
-Pending
-Shipped
-Delivered
-Cancelled
-Returned
-Refund
-Olarak ayrılmaktadır.
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 											-GEREKSİNİMLER-
 İşletim Sistemi:
 
 Windows, Linux veya macOS gibi işletim sistemlerinden biri.
+
 .NET Core SDK:
 
 Uygulamanın geliştirilmesi ve çalıştırılması için .NET Core SDK'nın yüklü olması gerekmektedir. .NET Core SDK, projenin .NET Core bileşenlerini derleyip çalıştırmanızı sağlar.
+
 Kod Editörü:
 
 Uygulama kodunun yazılması ve düzenlenmesi için bir kod editörüne ihtiyaç vardır. Örneğin, Visual Studio Code, Visual Studio, JetBrains Rider veya başka bir uyumlu kod editörü kullanılabilir.
+
 ASP.NET Core MVC ve Entity Framework Core:
 
 Uygulama, ASP.NET Core MVC ve Entity Framework Core ile geliştirilmiştir. Bu nedenle, geliştirme ortamınızda bu bileşenlerin yüklü ve kullanılabilir durumda olması gerekmektedir.
+
 Veritabanı Sunucusu:
 
-Uygulama, veritabanı işlemleri için bir veritabanı sunucusuna ihtiyaç duyar. Örneğin, MSSQL, MySQL, PostgreSQL gibi bir veritabanı sunucusu kullanılabilir. Bu sunucunun kurulumu ve yapılandırması, uygulamanın gereksinimlerine uygun olarak yapılmalıdır.
+Uygulama, veritabanı işlemleri için bir veritabanı sunucusuna ihtiyaç duyar.MSSQL Kullanımı proje için önerilir. Bu sunucunun kurulumu ve yapılandırması, uygulamanın gereksinimlerine uygun olarak yapılmalıdır. 
 
-
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+LinkedIN:	https://www.linkedin.com/in/yigitcetinkaya/
+GİTHUB:  	https://github.com/Ctnn
 
 
